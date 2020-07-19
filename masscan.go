@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
+
 	"github.com/pkg/errors"
 )
 
@@ -13,6 +14,7 @@ type Masscan struct {
 	SystemPath string
 	Args       []string
 	Ports      string
+	PortsUDP   string
 	Ranges     string
 	Rate       string
 	Exclude    string
@@ -29,6 +31,9 @@ func (m *Masscan) SetArgs(arg ...string) {
 }
 func (m *Masscan) SetPorts(ports string) {
 	m.Ports = ports
+}
+func (m *Masscan) SetPortsUDP(ports string) {
+	m.PortsUDP = ports
 }
 func (m *Masscan) SetRanges(ranges string) {
 	m.Ranges = ranges
@@ -57,6 +62,10 @@ func (m *Masscan) Run() error {
 	}
 	if m.Ports != "" {
 		m.Args = append(m.Args, "-p")
+		m.Args = append(m.Args, m.Ports)
+	}
+	if m.Ports != "" {
+		m.Args = append(m.Args, "-pU")
 		m.Args = append(m.Args, m.Ports)
 	}
 	if m.Exclude != "" {
