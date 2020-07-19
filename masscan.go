@@ -66,7 +66,7 @@ func (m *Masscan) Run() error {
 	}
 	if m.PortsUDP != "" {
 		// -pU:53,88,179
-		m.Args = append(m.Args, "-pU:"+m.Ports)
+		m.Args = append(m.Args, "-pU:"+m.PortsUDP)
 	}
 	if m.Exclude != "" {
 		m.Args = append(m.Args, "--exclude")
