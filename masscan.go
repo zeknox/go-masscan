@@ -16,6 +16,7 @@ type Masscan struct {
 	Ports      string
 	PortsUDP   string
 	Ranges     string
+	InputList  string
 	Rate       string
 	Exclude    string
 	Result     []byte
@@ -38,7 +39,9 @@ func (m *Masscan) SetPortsUDP(ports string) {
 func (m *Masscan) SetRanges(ranges string) {
 	m.Ranges = ranges
 }
-
+func (m *Masscan) SetInputList(list string) {
+	m.InputList = list
+}
 func (m *Masscan) SetRate(rate string) {
 	m.Rate = rate
 }
@@ -59,6 +62,10 @@ func (m *Masscan) Run() error {
 	if m.Ranges != "" {
 		m.Args = append(m.Args, "--range")
 		m.Args = append(m.Args, m.Ranges)
+	}
+	if m.InputList != "" {
+		m.Args = append(m.Args, "-iL")
+		m.Args = append(m.Args, m.InputList)
 	}
 	if m.Ports != "" {
 		m.Args = append(m.Args, "-p")
